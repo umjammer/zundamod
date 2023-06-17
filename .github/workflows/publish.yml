@@ -23,6 +23,8 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
