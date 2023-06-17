@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "zundamod",
+	"version": "${version}",
+	"name": "zundamod",
+	"description": "Narrator replacement with VoiceVox!",
+	"authors": [
+		"umjammer"
+	],
+	"contact": {
+		"homepage": "https://github.com/umjammer/zundamod",
+		"sources": "https://github.com/umjammer/zundamod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/zundamod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "vavi.mod.zundamod.ZundaMod"
+		]
+	},
+	"mixins": [
+		"zundamod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
