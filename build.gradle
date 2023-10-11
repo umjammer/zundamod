@@ -28,6 +28,10 @@ repositories {
 	}
 }
 
+configurations {
+	dependencyJars
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -36,18 +40,32 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 	implementation ("vavi:vavi-speech2:0.0.9") {
-		exclude group: "javax.speech", module: "speech"
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
 		exclude group: "vavi", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
+		exclude group: "vavi", module: "vavi-speech"
 		exclude group: "sen", module: "sen"
+		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
+		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
 	}
+	dependencyJars ("vavi:vavi-speech2:0.0.9") { // TODO how to copy this from implementation or use implementation w/o error
+		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
+		exclude group: "vavi", module: "vavi-util-screenscraping"
+		exclude group: "vavi", module: "vavi-sound-nda"
+		exclude group: "vavi", module: "vavi-speech"
+		exclude group: "sen", module: "sen"
+		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
+		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
+	}
+	// TODO HEY! HEY! HEY! Mr. fabric-loom, make include work recursively. my dependency jars are over 100!
+	configurations.dependencyJars.incoming.resolutionResult.allDependencies
+			.forEach { include(it.getRequested().toString())}
 }
 
 processResources {

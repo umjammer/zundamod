@@ -1,5 +1,5 @@
 [![Fabric](https://img.shields.io/badge/Mod_Loader-Fabric-blue)](https://fabricmc.net/)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1-green)](https://www.minecraft.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.20.2-green)](https://www.minecraft.net/)
 [![Java CI](https://github.com/umjammer/zundamod/actions/workflows/build.yml/badge.svg)](https://github.com/umjammer/zundamod/actions/workflows/build.yml)
 [![GitHub Release Assets](https://github.com/umjammer/zundamod/actions/workflows/publish.yml/badge.svg)](https://github.com/umjammer/zundamod/actions/workflows/publish.yml)
 ![Java](https://img.shields.io/badge/Java-17-b07219)
@@ -10,12 +10,17 @@
 
 A replacement of narration mod for Minecraft with Fabric launcher.
 
+see also [Modrinth](https://modrinth.com/mod/zundamod)
+
 ## Usage
 
 run [VoiceVox.app](https://voicevox.hiroshiba.jp/) before Minecraft starting
 
+for [better japanese input](https://github.com/nakanotti/CocoaInput)
+
 ## Depends
 
+ * [Fabric Loader](https://fabricmc.net/develop/)
  * [Cloth Config API](https://modrinth.com/mod/cloth-config) (🚧)
  * [Mod Menu](https://modrinth.com/mod/modmenu) (🚧)
 
