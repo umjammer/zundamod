@@ -16,6 +16,8 @@ see also [Modrinth](https://modrinth.com/mod/zundamod)
 
 run [VoiceVox.app](https://voicevox.hiroshiba.jp/) before Minecraft starting
 
+make sure `Opening/Options.../Accessibility Settings.../Narrator:` is NOT `OFF`!
+
 for [better japanese input](https://github.com/nakanotti/CocoaInput)
 
 ## Depends
@@ -27,10 +29,11 @@ for [better japanese input](https://github.com/nakanotti/CocoaInput)
 ## TODO
 
  * configuration
+   * url
    * voice
    * volume
    * speed
- * diet dependencies jar more
+ * ~~diet dependencies jar more~~
 
 ## Warning
 
