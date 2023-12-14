@@ -57,6 +57,7 @@ dependencies {
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
 		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
+		exclude group: "org.ow2.asm", module: "asm"
 	}
 	dependencyJars ("vavi:vavi-speech2:0.0.9") { // TODO how to copy this from implementation or use implementation w/o error
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
@@ -66,6 +67,7 @@ dependencies {
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
 		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
+		exclude group: "org.ow2.asm", module: "asm"
 	}
 	// TODO HEY! HEY! HEY! Mr. fabric-loom, make include work recursively. my dependency jars are over 100!
 	configurations.dependencyJars.incoming.resolutionResult.allDependencies
