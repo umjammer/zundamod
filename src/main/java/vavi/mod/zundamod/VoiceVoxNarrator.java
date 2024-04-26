@@ -32,9 +32,7 @@ public class VoiceVoxNarrator implements Narrator {
 
     public VoiceVoxNarrator() throws InitializeException {
         try {
-            EngineManager.registerEngineListFactory(vavi.speech.voicevox.jsapi2.VoiceVoxEngineListFactory.class.getName());
-
-            synthesizer = (Synthesizer) EngineManager.createEngine(vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode.DEFAULT);
+            synthesizer = (Synthesizer) EngineManager.createEngine(new vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode());
             synthesizer.allocate();
             synthesizer.waitEngineState(Engine.ALLOCATED);
             synthesizer.resume();
