@@ -17,16 +17,18 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 	maven {
-		url = uri("https://gitlab.com/api/v4/projects/*/packages/maven")
+		url = uri("https://maven.pkg.github.com/umjammer/*")
 		credentials {
 			username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-			password = project.findProperty("gpr.key") ?: System.getenv("GITLAB_TOKEN")
+			password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
 		}
 	}
 	maven {
 		url = uri("https://jitpack.io")
 	}
 	maven { url "https://maven.terraformersmc.com/releases/" } // for modmenu
+	maven { url "https://gitlab.com/api/v4/projects/30804899/packages/maven/" } // for vavi-sound-nda
+	maven { url "https://gitlab.com/api/v4/projects/18523814/packages/maven/" } // for sen
 }
 
 configurations {
