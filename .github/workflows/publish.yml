@@ -25,10 +25,12 @@ jobs:
           ./gradlew build
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          GITLAB_TOKEN: ${{ secrets.CUSTOM_GITLAB_TOKEN }}
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          GITLAB_TOKEN: ${{ secrets.CUSTOM_GITLAB_TOKEN }}
         with:
           files: build/libs/*-release.jar
