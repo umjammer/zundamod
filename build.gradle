@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -16,13 +16,6 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
-	maven {
-		url = uri("https://maven.pkg.github.com/umjammer/*")
-		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-			password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-		}
-	}
 	maven {
 		url = uri("https://jitpack.io")
 	}
@@ -49,21 +42,21 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-	implementation ("vavi:vavi-speech2:0.0.9") {
+	implementation ("com.github.umjammer:vavi-speech2:0.0.17") {
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
-		exclude group: "vavi", module: "vavi-util-screenscraping"
+		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
-		exclude group: "vavi", module: "vavi-speech"
+		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
 		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
 		exclude group: "org.ow2.asm", module: "asm"
 	}
-	dependencyJars ("vavi:vavi-speech2:0.0.9") { // TODO how to copy this from implementation or use implementation w/o error
+	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.17") { // TODO how to copy this from implementation or use implementation w/o error
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
-		exclude group: "vavi", module: "vavi-util-screenscraping"
+		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
-		exclude group: "vavi", module: "vavi-speech"
+		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
 		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
@@ -83,7 +76,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {
@@ -92,13 +85,13 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${project.base.archivesName.get()}"}
 	}
 }
 
