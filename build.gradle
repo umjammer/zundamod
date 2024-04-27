@@ -47,32 +47,39 @@ dependencies {
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
-	// fabric-loom provides modmenu 7.0.0 which doesn't work with mc 1.20.4, so specifying the newest version.
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-	implementation ("com.github.umjammer:vavi-speech2:0.0.17") {
+	implementation ("com.github.umjammer:vavi-speech2:0.0.18") {
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
 		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
 		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
+		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
 		exclude group: "org.ow2.asm", module: "asm"
+		exclude group: "com.github.umjammer", module: "vavi-speech"
+		exclude group: "com.github.umjammer", module: "javax-speech"
+		exclude group: "com.github.umjammer.jsapi", module: "javax.speech"
+		exclude group: "com.github.umjammer.FreeTTS", module: "freetts-jsapi10"
 	}
-	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.17") { // TODO how to copy this from implementation or use implementation w/o error
+	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.18") { // TODO how to copy this from implementation or use implementation w/o error
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
 		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
 		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
+		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
 		exclude group: "org.ow2.asm", module: "asm"
+		exclude group: "com.github.umjammer", module: "vavi-speech"
+		exclude group: "com.github.umjammer", module: "javax-speech"
+		exclude group: "com.github.umjammer.jsapi", module: "javax.speech"
+		exclude group: "com.github.umjammer.FreeTTS", module: "freetts-jsapi10"
 	}
 	// TODO HEY! HEY! HEY! Mr. fabric-loom, make include work recursively. my dependency jars are over 100!
 	configurations.dependencyJars.incoming.resolutionResult.allDependencies
 			.forEach {
-				if (!it.getRequested().toString().contains("com.github.umjammer.vavi-commons"))
+				if (!it.getRequested().toString().contains("com.github.umjammer:vavi-commons")) // avoiding error at remapJar task
 				    include(it.getRequested().toString())
 			}
 }
