@@ -50,12 +50,6 @@ dependencies {
 	// fabric-loom provides modmenu 7.0.0 which doesn't work with mc 1.20.4, so specifying the newest version.
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-	implementation ("com.github.umjammer:vavi-commons:1.1.12") {
-		group {
-			"com.github.umjammer" // TODO idk why this works (for remapJar duplication jar error)
-		}
-	}
-
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 	implementation ("com.github.umjammer:vavi-speech2:0.0.17") {
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
@@ -64,8 +58,6 @@ dependencies {
 		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
-		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
-		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-commons"
 		exclude group: "org.ow2.asm", module: "asm"
 	}
 	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.17") { // TODO how to copy this from implementation or use implementation w/o error
@@ -75,13 +67,14 @@ dependencies {
 		exclude group: "com.github.umjammer", module: "vavi-sound-sandbox"
 		exclude group: "sen", module: "sen"
 		exclude group: "com.github.umjammer", module: "vavi-commons-sandbox"
-		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-instrumentation"
-		exclude group: "com.github.umjammer.vavi-commons", module: "vavi-commons"
 		exclude group: "org.ow2.asm", module: "asm"
 	}
 	// TODO HEY! HEY! HEY! Mr. fabric-loom, make include work recursively. my dependency jars are over 100!
 	configurations.dependencyJars.incoming.resolutionResult.allDependencies
-			.forEach { include(it.getRequested().toString())}
+			.forEach {
+				if (!it.getRequested().toString().contains("com.github.umjammer.vavi-commons"))
+				    include(it.getRequested().toString())
+			}
 }
 
 processResources {
