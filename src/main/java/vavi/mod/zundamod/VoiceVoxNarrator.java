@@ -28,7 +28,7 @@ import com.mojang.text2speech.Narrator;
  */
 public class VoiceVoxNarrator implements Narrator {
 
-    private Synthesizer synthesizer;
+    private final Synthesizer synthesizer;
 
     public VoiceVoxNarrator() throws InitializeException {
         try {
@@ -39,7 +39,7 @@ public class VoiceVoxNarrator implements Narrator {
             synthesizer.waitEngineState(Synthesizer.RESUMED);
 
             String voiceName = "ずんだもん(ノーマル)";
-            Voice voice = Arrays.stream(((SynthesizerMode) synthesizer.getEngineMode()).getVoices()).filter(v -> v.getName().equals(voiceName)).findFirst().get();
+            Voice voice = Arrays.stream(((SynthesizerMode) synthesizer.getEngineMode()).getVoices()).filter(v -> v.getName().equals(voiceName)).findFirst().orElseThrow();
             synthesizer.getSynthesizerProperties().setVoice(new Voice(voice.getSpeechLocale(), voice.getName(), voice.getGender(), Voice.AGE_DONT_CARE, Voice.VARIANT_DONT_CARE));
 //            synthesizer.getSynthesizerProperties().setVolume(5);
 
@@ -51,7 +51,7 @@ public class VoiceVoxNarrator implements Narrator {
     }
 
     @Override
-    public void say(String msg, boolean interrupt) {
+    public void say(String msg, boolean interrupt, float volume) {
         if (interrupt) {
             synthesizer.cancel();
         } else {
