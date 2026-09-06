@@ -33,6 +33,10 @@ public class ZundaMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("zundamod");
 
+    static {
+        System.setProperty("org.jvoicexml.jsapi2.synthesis.QueueManager.cancelStrategy", "drain");
+    }
+
 	/** whole configuration */
 	@PropsEntity(url = "file:config/zundamod.properties")
 	static class Conf {
@@ -46,8 +50,13 @@ public class ZundaMod implements ModInitializer {
         /** url */
 		@Property
 		String coeiroInk;
+        /** url */
 		@Property
 		String aivis;
+
+		/** {@code false} keeps the chat input echo, see {@code VoiceVoxNarrator#isChatInputEcho} */
+		@Property
+        boolean filterChatInputEcho = true;
 	}
 
 	/** each configuration */
@@ -90,6 +99,9 @@ public class ZundaMod implements ModInitializer {
 	/** models */
 	static List<Model> models = new ArrayList<>();
 
+	/** drop the chat input box narration, which the chat narration says again */
+	static boolean filterChatInputEcho;
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -100,6 +112,8 @@ public class ZundaMod implements ModInitializer {
 		try {
 			PropsEntity.Util.bind(conf);
 			LOGGER.info("models: " + conf.models);
+			filterChatInputEcho = conf.filterChatInputEcho;
+			LOGGER.info("filterChatInputEcho: " + filterChatInputEcho);
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage(), e);
 		}

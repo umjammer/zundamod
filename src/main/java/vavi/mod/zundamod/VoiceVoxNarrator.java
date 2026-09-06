@@ -24,6 +24,7 @@ import javax.speech.synthesis.Voice;
 
 import com.mojang.text2speech.Narrator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 
 /**
@@ -95,8 +96,40 @@ public class VoiceVoxNarrator implements Narrator {
     /** chat identifier */
     private static final Pattern pattern = Pattern.compile("^(.+?) says (.+)$");
 
+    /** narration of the chat input box, "Message to send: %s" */
+    private static final String CHAT_INPUT_NARRATION_KEY = "chat_screen.message";
+
+    /**
+     * While you type, {@code ChatScreen} narrates the input box as
+     * {@link #CHAT_INPUT_NARRATION_KEY}, and once the message is sent
+     * {@code ChatListener} narrates it again as "&lt;player&gt; says &lt;message&gt;".
+     * That makes every message you send sound twice, here even in two voices,
+     * since only the latter matches {@link #pattern}. Drop the former.
+     *
+     * @param msg the narration text
+     * @return whether msg is the narration of the chat input box
+     */
+    private static boolean isChatInputEcho(String msg) {
+        if (!ZundaMod.filterChatInputEcho) {
+            return false;
+        }
+        // with chat narration off nothing repeats the input box, so keep saying it
+        if (!Minecraft.getInstance().options.narrator().get().shouldNarrateChat()) {
+            return false;
+        }
+        // the prefix is localized, ask the language for it instead of hard coding it
+        String prefix = Component.translatable(CHAT_INPUT_NARRATION_KEY, "").getString();
+        // an unresolved key gives the key itself, an empty prefix would match everything
+        return !prefix.isEmpty() && msg.startsWith(prefix);
+    }
+
     @Override
     public void say(String msg, boolean interrupt, float volume) {
+        if (isChatInputEcho(msg)) {
+ZundaMod.LOGGER.info("skip chat input echo: " + msg);
+            return;
+        }
+
         if (synthesizers.isEmpty()) {
             defaultNarrator.say(msg, interrupt, volume);
             return;
