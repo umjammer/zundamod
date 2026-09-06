@@ -35,6 +35,15 @@ configurations {
 	dependencyJars
 }
 
+loom {
+   runs {
+       client {
+           programArguments.add("--username")
+           programArguments.add("umjammer")
+       }
+   }
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -47,7 +56,7 @@ dependencies {
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-	implementation ("com.github.umjammer:vavi-speech2:0.0.23") {
+	implementation ("com.github.umjammer:vavi-speech2:0.0.26") {
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
 		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
@@ -61,7 +70,7 @@ dependencies {
 		exclude group: "com.github.umjammer.jsapi", module: "javax.speech"
 		exclude group: "com.github.umjammer.FreeTTS", module: "freetts-jsapi10"
 	}
-	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.23") { // TODO how to copy this from implementation or use implementation w/o error
+	dependencyJars ("com.github.umjammer:vavi-speech2:0.0.26") { // TODO how to copy this from implementation or use implementation w/o error
 		exclude group: "org.jvoicexml", module: "freetts_jsapi10"
 		exclude group: "com.github.umjammer", module: "vavi-util-screenscraping"
 		exclude group: "vavi", module: "vavi-sound-nda"
@@ -114,7 +123,8 @@ jar {
 // configure the maven publication
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
 			from components.java
 		}
 	}

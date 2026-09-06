@@ -18,7 +18,51 @@ run [VoiceVox.app](https://voicevox.hiroshiba.jp/) before Minecraft starting
 
 make sure `Opening/Options.../Accessibility Settings.../Narrator:` is NOT `OFF`!
 
-for [better japanese input](https://github.com/nakanotti/CocoaInput)
+~~for [better japanese input](https://github.com/nakanotti/CocoaInput)~~
+
+### property file
+
+- `${MINECRAFT}/config/zundamod.properties`
+```properties
+models=3
+
+class.1=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
+voice.1=ずんだもん(ノーマル)
+account.1=$$
+params.1=rate:110,pitch:15,volume:75
+
+class.2=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
+voice.2=ずんだもん(ノーマル)
+account.2=@@
+params.2=rate:120,pitch:30,volume:75
+
+class.3=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
+voice.3=春日部つむぎ(ノーマル)
+account.3=umjammer
+params.3=rate:5,volume:100
+```
+
+- models ... number of voice settings
+- class ... synthesizer class, available below
+
+```
+vavi.speech.aquestalk10.jsapi2.AquesTalk10EngineListFactory
+vavi.speech.googlecloud.jsapi2.GoogleCloudEngineListFactory
+vavi.speech.gyutan.jsapi2.GyutanEngineListFactory
+vavi.speech.rococoa.jsapi2.RococoaEngineListFactory
+vavi.speech.voicevox.jsapi2.VoiceVoxEngineListFactory
+vavi.speech.coeiroink.jsapi2.CoeiroInkEngineListFactory
+vavi.speech.aivis.jsapi2.AivisEngineListFactory
+vavi.speech.googlegenai.jsapi2.GoogleGenAITTSListFactory
+vavi.speech.qwen3tts.jsapi2.Qwen3TtsEngineListFactory
+```
+
+- voice ... voice name, see each application
+- account ... minecraft account, voice is changed for each account setting
+  - special: `$$` system narration, `@@` self
+- params ... params for voice, see each application
+
+for more detail, see [vavi-speech2](https://github.com/umjammer/vavi-speech2)
 
 ## Depends
 

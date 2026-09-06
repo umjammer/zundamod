@@ -39,3 +39,5 @@ replay_*.log
 *.hprof
 *.jfr
 remappedSrc/
+tmp/
+AGENTS.md
