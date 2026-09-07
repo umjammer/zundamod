@@ -16,7 +16,7 @@ see also [Modrinth](https://modrinth.com/mod/zundamod)
 
 run [VoiceVox.app](https://voicevox.hiroshiba.jp/) before Minecraft starting
 
-make sure `Opening/Options.../Accessibility Settings.../Narrator:` is NOT `OFF`!
+make sure `Opening/Options.../Accessibility Settings.../Narrator:` is `ALL`!
 
 ~~for [better japanese input](https://github.com/nakanotti/CocoaInput)~~
 
@@ -27,7 +27,7 @@ make sure `Opening/Options.../Accessibility Settings.../Narrator:` is NOT `OFF`!
 models=3
 
 class.1=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
-voice.1=ずんだもん(ノーマル)
+voice.1=四国めたん(ノーマル)
 account.1=$$
 params.1=rate:110,pitch:15,volume:75
 
@@ -46,15 +46,15 @@ params.3=rate:5,volume:100
 - class ... synthesizer class, available below
 
 ```
-vavi.speech.aquestalk10.jsapi2.AquesTalk10EngineListFactory
-vavi.speech.googlecloud.jsapi2.GoogleCloudEngineListFactory
-vavi.speech.gyutan.jsapi2.GyutanEngineListFactory
-vavi.speech.rococoa.jsapi2.RococoaEngineListFactory
-vavi.speech.voicevox.jsapi2.VoiceVoxEngineListFactory
-vavi.speech.coeiroink.jsapi2.CoeiroInkEngineListFactory
-vavi.speech.aivis.jsapi2.AivisEngineListFactory
-vavi.speech.googlegenai.jsapi2.GoogleGenAITTSListFactory
-vavi.speech.qwen3tts.jsapi2.Qwen3TtsEngineListFactory
+vavi.speech.aquestalk10.jsapi2.AquesTalk10SynthesizerMode
+vavi.speech.googlecloud.jsapi2.GoogleCloudSynthesizerMode
+vavi.speech.gyutan.jsapi2.GyutanSynthesizerMode
+vavi.speech.rococoa.jsapi2.RococoaSynthesizerMode
+vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
+vavi.speech.coeiroink.jsapi2.CoeiroInkSynthesizerMode
+vavi.speech.aivis.jsapi2.AivisSynthesizerMode
+vavi.speech.googlegenai.jsapi2.GoogleGenAITTSSynthesizerMode
+vavi.speech.qwen3tts.jsapi2.Qwen3TtsSynthesizerMode
 ```
 
 - voice ... voice name, see each application
