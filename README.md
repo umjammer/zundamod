@@ -29,17 +29,17 @@ models=3
 class.1=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
 voice.1=四国めたん(ノーマル)
 account.1=$$
-params.1=rate:110,pitch:15,volume:75
+params.1=rate:110,pitch:15
 
 class.2=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
 voice.2=ずんだもん(ノーマル)
 account.2=@@
-params.2=rate:120,pitch:30,volume:75
+params.2=rate:120,pitch:30
 
 class.3=vavi.speech.voicevox.jsapi2.VoiceVoxSynthesizerMode
 voice.3=春日部つむぎ(ノーマル)
 account.3=umjammer
-params.3=rate:5,volume:100
+params.3=rate:5
 ```
 
 - models ... number of voice settings
@@ -73,10 +73,11 @@ for more detail, see [vavi-speech2](https://github.com/umjammer/vavi-speech2)
 ## TODO
 
  * configuration
-   * url
-   * voice
-   * volume
-   * speed
+   * ~~url~~
+   * ~~voice~~
+   * ~~volume~~
+   * ~~speed~~
+   * use mod menu, cloth config
  * ~~diet dependencies jar more~~
 
 ## Warning
