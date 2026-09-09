@@ -46,13 +46,16 @@ public class ZundaMod implements ModInitializer {
 
         /** url */
 		@Property
-		String voiceVox;
+        String voiceVox;
         /** url */
-		@Property
-		String coeiroInk;
+        @Property
+        String coeiroInk;
         /** url */
-		@Property
-		String aivis;
+        @Property
+        String aivis;
+        /** url */
+        @Property
+        String qwen3tts;
 
 		/** {@code false} keeps the chat input echo, see {@code VoiceVoxNarrator#isChatInputEcho} */
 		@Property
@@ -111,9 +114,27 @@ public class ZundaMod implements ModInitializer {
 		ZundaMod.Conf conf = new Conf();
 		try {
 			PropsEntity.Util.bind(conf);
-			LOGGER.info("models: " + conf.models);
-			filterChatInputEcho = conf.filterChatInputEcho;
-			LOGGER.info("filterChatInputEcho: " + filterChatInputEcho);
+            LOGGER.info("models: {}", conf.models);
+
+            if (conf.voiceVox != null) {
+                System.setProperty("vavi.speech.voicevox.url", conf.voiceVox);
+                LOGGER.info("vavi.speech.voicevox.url: {}", conf.voiceVox);
+            }
+            if (conf.coeiroInk != null) {
+                System.setProperty("vavi.speech.coeiroink.url", conf.coeiroInk);
+                LOGGER.info("vavi.speech.coeiroink.url: {}", conf.coeiroInk);
+            }
+            if (conf.aivis != null) {
+                System.setProperty("vavi.speech.aivis.url", conf.aivis);
+                LOGGER.info("vavi.speech.aivis.url: {}", conf.aivis);
+            }
+            if (conf.qwen3tts != null) {
+                System.setProperty("vavi.speech.qwen3tts.url", conf.qwen3tts);
+                LOGGER.info("vavi.speech.qwen3tts.url: {}", conf.qwen3tts);
+            }
+
+            filterChatInputEcho = conf.filterChatInputEcho;
+            LOGGER.info("filterChatInputEcho: {}", filterChatInputEcho);
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage(), e);
 		}
@@ -124,7 +145,7 @@ public class ZundaMod implements ModInitializer {
 				Model model = new Model();
 				PropsEntity.Util.bind(model, String.valueOf(i));
 				models.add(model);
-				LOGGER.info("model[" + i + "]: " + model);
+                LOGGER.info("model[{}]: {}", i, model);
 			} catch (Exception e) {
 				LOGGER.warn(e.getMessage(), e);
 			}

@@ -60,20 +60,39 @@ public class VoiceVoxNarrator implements Narrator {
                 String voiceName = model.voice;
                 Voice voice = Arrays.stream(((SynthesizerMode) synthesizer.getEngineMode()).getVoices()).filter(v -> v.getName().equals(voiceName)).findFirst().get();
                 synthesizer.getSynthesizerProperties().setVoice(new Voice(voice.getSpeechLocale(), voice.getName(), voice.getGender(), Voice.AGE_DONT_CARE, Voice.VARIANT_DONT_CARE));
+
+                // VoiceVox series
                 String rate = model.param("rate");
                 if (rate != null) {
                     synthesizer.getSynthesizerProperties().setSpeakingRate(Integer.parseInt(rate));
-                    ZundaMod.LOGGER.info(model.account + ", rate: " +synthesizer.getSynthesizerProperties().getSpeakingRate());
+                    ZundaMod.LOGGER.info("{}, rate: {}", model.account, synthesizer.getSynthesizerProperties().getSpeakingRate());
                 }
                 String pitch = model.param("pitch");
                 if (pitch != null) {
                     synthesizer.getSynthesizerProperties().setPitch(Integer.parseInt(pitch));
-                    ZundaMod.LOGGER.info(model.account + ", pitch: " +synthesizer.getSynthesizerProperties().getPitch());
+                    ZundaMod.LOGGER.info("{}, pitch: {}", model.account, synthesizer.getSynthesizerProperties().getPitch());
                 }
-                String volume = model.param("volume");
-                if (volume != null) {
-                    synthesizer.getSynthesizerProperties().setVolume(Integer.parseInt(volume));
-                    ZundaMod.LOGGER.info(model.account + ", volume: " +synthesizer.getSynthesizerProperties().getVolume());
+
+                // qwen3tty
+                String refAudio = model.param("refAudio");
+                if (refAudio != null) {
+                    System.setProperty("vavi.speech.qwen3tts.refAudio", refAudio);
+                    ZundaMod.LOGGER.info("{}, refAudio: {}", "vavi.speech.qwen3tts.refAudio", refAudio);
+                }
+                String refText = model.param("refText");
+                if (refText != null) {
+                    System.setProperty("vavi.speech.qwen3tts.refText", refText);
+                    ZundaMod.LOGGER.info("{}, refText: {}", "vavi.speech.qwen3tts.refText", refText);
+                }
+                String clone = model.param("clone");
+                if (clone != null) {
+                    System.setProperty("vavi.speech.qwen3tts.clone", clone);
+                    ZundaMod.LOGGER.info("{}, clone: {}", "vavi.speech.qwen3tts.clone", clone);
+                }
+                String language = model.param("language");
+                if (language != null) {
+                    System.setProperty("vavi.speech.qwen3tts.language", language);
+                    ZundaMod.LOGGER.info("{}, language: {}", "vavi.speech.qwen3tts.language", language);
                 }
 
                 synthesizers.put(model.account, synthesizer);
@@ -126,7 +145,7 @@ public class VoiceVoxNarrator implements Narrator {
     @Override
     public void say(String msg, boolean interrupt, float volume) {
         if (isChatInputEcho(msg)) {
-ZundaMod.LOGGER.info("skip chat input echo: " + msg);
+ZundaMod.LOGGER.info("skip chat input echo: {}", msg);
             return;
         }
 
@@ -139,7 +158,7 @@ ZundaMod.LOGGER.info("skip chat input echo: " + msg);
         String message = msg;
         String username = Minecraft.getInstance().getGameProfile().name();
         Matcher matcher = pattern.matcher(msg);
-ZundaMod.LOGGER.info("say: " + matcher.matches() + ", " + username + ", " + msg);
+ZundaMod.LOGGER.info("say: {}, {}, {}, {}", matcher.matches(), username, msg, volume);
         try {
             if (matcher.matches()) {
                 synthesizer = synthesizers.get(matcher.group(1));
@@ -157,7 +176,9 @@ ZundaMod.LOGGER.info("say: " + matcher.matches() + ", " + username + ", " + msg)
             ZundaMod.LOGGER.warn(e.getMessage(), e);
         }
         if (synthesizer != null) {
-ZundaMod.LOGGER.info("synthesizer: " + synthesizer + ", " + message + ", " + interrupt);
+            int v = (int) (100 * volume);
+ZundaMod.LOGGER.info("synthesizer: {}, {}, {}, {}, {}", synthesizer, message, interrupt, volume, v);
+            synthesizer.getSynthesizerProperties().setVolume(v);
             synthesizer.speak(message, m -> ZundaMod.LOGGER.info(m.toString()));
         } else {
             defaultNarrator.say(msg, interrupt, volume);
